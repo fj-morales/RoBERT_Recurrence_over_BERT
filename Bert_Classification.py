@@ -46,17 +46,17 @@ class Bert_Classification_Model(nn.Module):
         ids: array
             -
         mask: array
-            - 
+            -
         token_type_ids: array
             -
 
         Returns
         _______
-            - 
+            -
         """
 
         _, pooled_out = self.bert(
-            ids, attention_mask=mask, token_type_ids=token_type_ids)
+            ids, attention_mask=mask, token_type_ids=token_type_ids, return_dict=False)
         # rh=self.bert_drop(pooled_out)
         # rh=self.fc(rh)
         # rh=self.relu(rh)

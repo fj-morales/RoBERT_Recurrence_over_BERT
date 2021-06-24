@@ -27,6 +27,9 @@ from transformers import get_linear_schedule_with_warmup
 import time
 
 
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
+
+
 class ConsumerComplaintsDataset1(Dataset):
     """ Make preprocecing, tokenization and transform consumer complaints
     dataset into pytorch DataLoader instance.
@@ -36,7 +39,7 @@ class ConsumerComplaintsDataset1(Dataset):
     tokenizer: BertTokenizer
         transform data into feature that bert understand
     max_len: int
-        the max number of token in a sequence in bert tokenization. 
+        the max number of token in a sequence in bert tokenization.
     overlap_len: int
         the maximum number of overlap token.
     chunk_len: int
@@ -56,7 +59,8 @@ class ConsumerComplaintsDataset1(Dataset):
         data labels
     """
 
-    def __init__(self, tokenizer, max_len, chunk_len=200, overlap_len=50, approach="all", max_size_dataset=None, file_location="./us-consumer-finance-complaints/consumer_complaints.csv", min_len=249):
+
+    def __init__(self, tokenizer, max_len, chunk_len=200, overlap_len=50, approach="all", max_size_dataset=None, file_location=filename, min_len=249):
         self.tokenizer = tokenizer
         self.max_len = max_len
         self.overlap_len = overlap_len
@@ -84,24 +88,11 @@ class ConsumerComplaintsDataset1(Dataset):
         # Load the dataset into a pandas dataframe.
         print("Nettoyage des données")
         df = pd.read_csv(file_location, dtype="unicode")
-        train_raw = df[df.consumer_complaint_narrative.notnull()]
+        train_raw = df[df.text.notnull()]
         train_raw = train_raw.assign(
-            len_txt=train_raw.consumer_complaint_narrative.apply(lambda x: len(x.split())))
+            len_txt=train_raw.text.apply(lambda x: len(x.split())))
         train_raw = train_raw[train_raw.len_txt > self.min_len]
-        train_raw = train_raw[['consumer_complaint_narrative', 'product']]
         train_raw.reset_index(inplace=True, drop=True)
-        train_raw.at[train_raw['product'] == 'Credit reporting',
-                     'product'] = 'Credit reporting, credit repair services, or other personal consumer reports'
-        train_raw.at[train_raw['product'] == 'Credit card',
-                     'product'] = 'Credit card or prepaid card'
-        train_raw.at[train_raw['product'] == 'Prepaid card',
-                     'product'] = 'Credit card or prepaid card'
-        train_raw.at[train_raw['product'] == 'Payday loan',
-                     'product'] = 'Payday loan, title loan, or personal loan'
-        train_raw.at[train_raw['product'] == 'Virtual currency',
-                     'product'] = 'Money transfer, virtual currency, or money service'
-        train_raw = train_raw.rename(
-            columns={'consumer_complaint_narrative': 'text', 'product': 'label'})
         LE = LabelEncoder()
         train_raw['label'] = LE.fit_transform(train_raw['label'])
         train = train_raw.copy()
@@ -149,7 +140,7 @@ class ConsumerComplaintsDataset1(Dataset):
         previous_input_ids = data_tokenize["input_ids"].reshape(-1)
         previous_attention_mask = data_tokenize["attention_mask"].reshape(-1)
         previous_token_type_ids = data_tokenize["token_type_ids"].reshape(-1)
-        remain = data_tokenize.get("overflowing_tokens")
+        remain = data_tokenize.get("overflowing_tokens").reshape(-1)
         targets = torch.tensor(targets, dtype=torch.int)
 
         input_ids_list.append(previous_input_ids)
@@ -157,7 +148,7 @@ class ConsumerComplaintsDataset1(Dataset):
         token_type_ids_list.append(previous_token_type_ids)
         targets_list.append(targets)
 
-        if remain and self.approach != 'head':
+        if remain.size() and self.approach != 'head':
             remain = torch.tensor(remain, dtype=torch.long)
             idxs = range(len(remain)+self.chunk_len)
             idxs = idxs[(self.chunk_len-self.overlap_len-2)
@@ -168,7 +159,9 @@ class ConsumerComplaintsDataset1(Dataset):
             end_token = torch.tensor([102], dtype=torch.long)
 
             for i, idx in enumerate(idxs):
+                previous_idx = 0
                 if i == 0:
+                    print(input_ids_first_overlap.shape, remain[:idx].shape)
                     input_ids = torch.cat(
                         (input_ids_first_overlap, remain[:idx]))
                 elif i == len(idxs):
@@ -177,8 +170,8 @@ class ConsumerComplaintsDataset1(Dataset):
                     break
                 else:
                     input_ids = remain[(previous_idx-self.overlap_len):idx]
-
                 previous_idx = idx
+
 
                 nb_token = len(input_ids)+2
                 attention_mask = torch.ones(self.chunk_len, dtype=torch.long)

@@ -239,7 +239,7 @@ valid_data_loader=DataLoader(
 # %% markdown
 # ![img/each_Chunk_as_Document.png](img/each_Chunk_as_Document.png)
 # %% codecell
-device="cpu"
+# device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -275,6 +275,12 @@ pd.DataFrame(np.array(val_acc).T,
                    columns=['Validation']).plot(title="accuracy")
 # %% codecell
 
+
+#######################################################
+
+## Try out
+
+###############################################
 # %% markdown
 # ##### Now we will experience the [Truncation strategies presented in this paper](https://arxiv.org/abs/1905.05583)
 #
@@ -351,7 +357,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-device="cpu"
+# device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -443,7 +449,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-device="cpu"
+# device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -539,7 +545,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-device="cpu"
+# device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 

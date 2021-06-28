@@ -1,30 +1,6 @@
-##############################################################
-#
-# utils.py
-# This file contains various functions that are applied in
-# the training loops.
-# They convert batch data into tensors, feed them to the models,
-# compute the loss and propagate it.
-#
-##############################################################
-
 import torch
-# import pandas as pd
 import numpy as np
-# from sklearn.preprocessing import LabelEncoder
-# import re
-# from sklearn.model_selection import train_test_split
-# from transformers import DistilBertTokenizer
-# from transformers import BertForSequenceClassification, AdamW, BertConfig
-# from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-
 import torch.nn as nn
-# from torch.utils.data import Dataset, DataLoader, random_split
-# from torch.utils.data.sampler import SubsetRandomSampler
-# import transformers
-# # get_linear_schedule_with_warmup
-# from transformers import BertTokenizer, BertModel, AdamW
-# from transformers import get_linear_schedule_with_warmup
 import time
 
 

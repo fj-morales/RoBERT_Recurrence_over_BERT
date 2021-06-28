@@ -104,8 +104,8 @@ else:
 # The final dataset used in this work consists of 555957 rows and 2 columns (one column for the texts and the other for the labels).
 # %% codecell
 # Load the dataset into a pandas dataframe.
-# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
-filename = './train_covid_sections.csv'
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+# filename = './train_covid_sections.csv'
 
 df=pd.read_csv(filename)
 

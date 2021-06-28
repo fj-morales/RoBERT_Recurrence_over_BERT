@@ -57,8 +57,12 @@ class DisBert_Classification_Model(nn.Module):
             -
         """
 
-        _, pooled_out = self.bert(
-            ids, attention_mask=mask)
+        # _, pooled_out = self.bert(
+        #     ids, attention_mask=mask, return_dict=False)
+        hidden_state = self.bert(
+            ids, attention_mask=mask)[0]
+        pooled_out = hidden_state[:, 0]
+        print(pooled_out.dim())
         # rh=self.bert_drop(pooled_out)
         # rh=self.fc(rh)
         # rh=self.relu(rh)

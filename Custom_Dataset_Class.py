@@ -27,8 +27,8 @@ from transformers import get_linear_schedule_with_warmup
 import time
 
 
-# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
-filename = './train_covid_sections.csv'
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+# filename = './train_covid_sections.csv'
 
 
 class ConsumerComplaintsDataset1(Dataset):

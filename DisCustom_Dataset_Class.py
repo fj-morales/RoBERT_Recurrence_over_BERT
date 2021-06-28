@@ -163,7 +163,7 @@ class DisConsumerComplaintsDataset1(Dataset):
             for i, idx in enumerate(idxs):
                 previous_idx = 0
                 if i == 0:
-                    print(input_ids_first_overlap.shape, remain[:idx].shape)
+                    # print(input_ids_first_overlap.shape, remain[:idx].shape)
                     input_ids = torch.cat(
                         (input_ids_first_overlap, remain[:idx]))
                 elif i == len(idxs):

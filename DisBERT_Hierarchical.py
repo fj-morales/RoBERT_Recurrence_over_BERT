@@ -42,8 +42,14 @@ class BERT_Hierarchical_Model(nn.Module):
 
     def forward(self, ids, mask, token_type_ids, lengt):
 
-        _, pooled_out = self.bert(
-            ids, attention_mask=mask)
+        # _, pooled_out = self.bert(
+        #     ids, attention_mask=mask)
+
+        # pooled_out = self.bert(
+        #     ids, attention_mask=mask)
+        hidden_state = self.bert(
+            ids, attention_mask=mask)[0]
+        pooled_out = hidden_state[:, 0]
 
         chunks_emb = pooled_out.split_with_sizes(lengt)
 

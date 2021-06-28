@@ -72,7 +72,7 @@ from utils import *
 from DisCustom_Dataset_Class import DisConsumerComplaintsDataset1
 # from Bert_Classification import Bert_Classification_Model
 from DisBert_Classification import DisBert_Classification_Model
-from RoBERT import RoBERT_Model
+from DisRoBERT import DisRoBERT_Model
 
 from BERT_Hierarchical import BERT_Hierarchical_Model
 import warnings
@@ -244,7 +244,7 @@ valid_data_loader=DataLoader(
 # %% markdown
 # ![img/each_Chunk_as_Document.png](img/each_Chunk_as_Document.png)
 # %% codecell
-device="cpu"
+#device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -363,7 +363,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-device="cpu"
+#device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -456,7 +456,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-device="cpu"
+#device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -553,13 +553,13 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-device="cpu"
+#device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
 model=torch.load("model1/model_epoch2.pt")
 
-model_rnn=RoBERT_Model(bertFineTuned=list(model.children())[0]).to(device)
+model_rnn=DisRoBERT_Model(bertFineTuned=list(model.children())[0]).to(device)
 optimizer=AdamW(model_rnn.parameters(), lr=lr)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                         num_warmup_steps = 0,

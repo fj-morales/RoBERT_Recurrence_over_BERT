@@ -1,29 +1,5 @@
-##############################################################
-#
-# RoBERT.py
-# This file contains the implementation of the RoBERT model
-# An LSTM is applied to a segmented document. The resulting
-# embedding is used for document-level classification
-#
-##############################################################
 import torch
-# import pandas as pd
-# import numpy as np
-# from sklearn.preprocessing import LabelEncoder
-# import re
-# from sklearn.model_selection import train_test_split
-# from transformers import BertTokenizer
-# from transformers import BertForSequenceClassification, AdamW, BertConfig
-# from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-
 import torch.nn as nn
-# from torch.utils.data import Dataset, DataLoader, random_split
-# from torch.utils.data.sampler import SubsetRandomSampler
-# import transformers
-# get_linear_schedule_with_warmup
-# from transformers import RobertaTokenizer, BertTokenizer, RobertaModel, BertModel, AdamW
-# from transformers import get_linear_schedule_with_warmup
-# import time
 
 
 class DisRoBERT_Model(nn.Module):

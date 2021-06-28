@@ -7,23 +7,23 @@
 #
 ##############################################################
 import torch
-import pandas as pd
-import numpy as np
-from sklearn.preprocessing import LabelEncoder
-import re
-from sklearn.model_selection import train_test_split
-from transformers import BertTokenizer
-from transformers import BertForSequenceClassification, AdamW, BertConfig
-from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
+# import pandas as pd
+# import numpy as np
+# from sklearn.preprocessing import LabelEncoder
+# import re
+# from sklearn.model_selection import train_test_split
+# from transformers import BertTokenizer
+# from transformers import BertForSequenceClassification, AdamW, BertConfig
+# from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader, random_split
-from torch.utils.data.sampler import SubsetRandomSampler
-import transformers
+# from torch.utils.data import Dataset, DataLoader, random_split
+# from torch.utils.data.sampler import SubsetRandomSampler
+# import transformers
 # get_linear_schedule_with_warmup
-from transformers import RobertaTokenizer, BertTokenizer, RobertaModel, BertModel, AdamW
-from transformers import get_linear_schedule_with_warmup
-import time
+# from transformers import RobertaTokenizer, BertTokenizer, RobertaModel, BertModel, AdamW
+# from transformers import get_linear_schedule_with_warmup
+# import time
 
 
 class DisRoBERT_Model(nn.Module):
@@ -37,7 +37,7 @@ class DisRoBERT_Model(nn.Module):
     """
 
     def __init__(self, bertFineTuned):
-        super(RoBERT_Model, self).__init__()
+        super(DisRoBERT_Model, self).__init__()
         self.bertFineTuned = bertFineTuned
         self.lstm = nn.LSTM(768, 100, num_layers=1, bidirectional=False)
         # self.out = nn.Linear(100, 10)

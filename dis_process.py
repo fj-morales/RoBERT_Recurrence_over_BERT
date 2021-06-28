@@ -1,61 +1,10 @@
-# %% markdown
-# # Fine-tuning BERT on long texts
-# %% markdown
-# In this notebook we explore different approach to overcome one of the main limitation of BERT (which stands for Bidirectional Encoder Representations from Transformers), the ability to process long document. In fact BERT can only be applied on text that have less than 512 token after tokenization with the Bert Tokenizer.
-#
-#
-# &nbsp;
-#
-#
-# We will implement [this paper, which introduce a new method to deal with Long Documents : RoBERT (Recurrence over BERT)](https://arxiv.org/abs/1910.10781).
-#
-#
-#
-# We will also implement [this paper, which introduce diferents methods to deal with Long Documents and BERT](https://arxiv.org/abs/1905.05583) to see if the RoBERT paper bring some significative improvement on the classification of Long Texts with BERT.
-#
-# This paper introduce 2 main approaches, the **Truncation methods** and the **Hierarchical methods** :
-#  * Truncation methods
-#    * head-only
-#    * tail-only
-#    * head+tail
-#  * Hierarchical methods
-#    * mean pooling
-#    * max pooling
-#
-# The Truncation methods applies to the input of the BERT model (the Tokens), while the Hierarchical methods applies to the ouputs of the Bert model (the embbeding), we will go into more detail in the respective parts
-#
-#
-# &nbsp;
-#
-#
-# The goal of the original RoBERT article was to solve the following problem: BERT has a fixed input token count; how can we use its power on long texts. This notebook implements the same approach using HuggingFace's `transformers` library and `pytorch`.
-#
-# The dataset used is the *US Consumer Finance Complaints* available on [Kaggle](https://www.kaggle.com/cfpb/us-consumer-finance-complaints).
-#
-# Basically, the article goes as follows:
-# 1. Read the data and do some basic preprocessing
-# 2. Break the documents into smaller segments with a number of tokens that can be handled by BERT
-# 3. Fine-tune BERT on those segments using a classification headremain[:idx]
-# 4. Combine the segments of each document by using an LSTM. The fixed output size of the LSTM can be used by a single fully connected layer for the final classification.
-#
-#
-# &nbsp;
-#
-#
-# For code clarity, we separated out some parts of the code into python scripts that are fully commented. They will be referenced throughout the notebook.
-#
-# Here is a graph that represents the differents Interaction between the differents Classes :
-# %% markdown
-# ![img/Class_Interactions.png](img/Class_Interactions.png)
-# %% codecell
-# %matplotlib inline" ".join(sec['pars'])
 import torch
 import pandas as pd
 import numpy as np
 # from sklearn.preprocessing import LabelEncoder
 # import re
 # from sklearn.model_selection import train_test_split
-from transformers import BertTokenizer, DistilBertTokenizer
+from transformers import DistilBertTokenizer
 # from transformers import BertForSequenceClassification, AdamW, BertConfig
 # from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 
@@ -67,7 +16,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 from transformers import get_linear_schedule_with_warmup
 import time
 
-from utils import *
+from dis_utils import *
 # from Custom_Dataset_Class import ConsumerComplaintsDataset1
 from DisCustom_Dataset_Class import DisConsumerComplaintsDataset1
 # from Bert_Classification import Bert_Classification_Model
@@ -106,9 +55,8 @@ else:
 # The final dataset used in this work consists of 555957 rows and 2 columns (one column for the texts and the other for the labels).
 # %% codecell
 # Load the dataset into a pandas dataframe.
-# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
-# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
-filename = './train_covid_sections.csv'
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+# filename = './train_covid_sections.csv'
 df=pd.read_csv(filename)
 
 # Report the number of sentences.

@@ -1,37 +1,12 @@
-##############################################################
-#
-# BERT_Hierarchical.py
-# This file contains the code to fine-tune BERT by computing
-# segment tensors as a pooled result from all the segments
-# obtained after tokenization.
-#
-##############################################################
-# import pandas as pd
-# import numpy as np
-# import time
-# import re
-# from sklearn.preprocessing import LabelEncoder
-# from sklearn.model_selection import train_test_split
-
-
 import torch
 import torch.nn as nn
-# from torch.utils.data import Dataset, DataLoader, random_split
-# from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-# from torch.utils.data.sampler import SubsetRandomSampler
-
 import transformers
-# from transformers import BertTokenizer, DistilBertTokenizer
-# from transformers import BertForSequenceClassification, AdamW, BertConfig
-# # get_linear_schedule_with_warmup
-# from transformers import RobertaTokenizer, BertTokenizer, RobertaModel, BertModel, AdamW
-# from transformers import get_linear_schedule_with_warmup
 
 
-class BERT_Hierarchical_Model(nn.Module):
+class DisBERT_Hierarchical_Model(nn.Module):
 
     def __init__(self, pooling_method="mean"):
-        super(BERT_Hierarchical_Model, self).__init__()
+        super(DisBERT_Hierarchical_Model, self).__init__()
 
         self.pooling_method = pooling_method
 

@@ -1,35 +1,13 @@
-##############################################################
-#
-# Custom_Dataset_Class.py
-# This file contains the code to load and prepare the dataset
-# for use by BERT.
-# It does preprocessing, segmentation and BERT features extraction
-#
-##############################################################
-
 import torch
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 import re
-# from sklearn.model_selection import train_test_split
-from transformers import BertTokenizer
-# from transformers import BertForSequenceClassification, AdamW, BertConfig
-# from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-
-# import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, random_split
-# from torch.utils.data.sampler import SubsetRandomSampler
-# import transformers
-# get_linear_schedule_with_warmup
-# from transformers import RobertaTokenizer, BertTokenizer, RobertaModel, BertModel, AdamW
-# from transformers import get_linear_schedule_with_warmup
-# import time
 
 
-# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
-# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
-filename = './train_covid_sections.csv'
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+# filename = './train_covid_sections.csv'
 
 class DisConsumerComplaintsDataset1(Dataset):
     """ Make preprocecing, tokenization and transform consumer complaints

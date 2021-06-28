@@ -40,7 +40,8 @@ class RoBERT_Model(nn.Module):
         super(RoBERT_Model, self).__init__()
         self.bertFineTuned = bertFineTuned
         self.lstm = nn.LSTM(768, 100, num_layers=1, bidirectional=False)
-        self.out = nn.Linear(100, 10)
+        # self.out = nn.Linear(100, 10)
+        self.out = nn.Linear(100, 3) # 3 classes
 
     def forward(self, ids, mask, token_type_ids, lengt):
         """ Define how to performed each call
@@ -50,7 +51,7 @@ class RoBERT_Model(nn.Module):
         ids: array
             -
         mask: array
-            - 
+            -
         token_type_ids: array
             -
         lengt: int
@@ -61,7 +62,7 @@ class RoBERT_Model(nn.Module):
         -
         """
         _, pooled_out = self.bertFineTuned(
-            ids, attention_mask=mask, token_type_ids=token_type_ids)
+            ids, attention_mask=mask, token_type_ids=token_type_ids, return_dict=False)
         chunks_emb = pooled_out.split_with_sizes(lengt)
 
         seq_lengths = torch.LongTensor([x for x in map(len, chunks_emb)])

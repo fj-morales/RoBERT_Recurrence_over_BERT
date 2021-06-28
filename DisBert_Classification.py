@@ -37,7 +37,7 @@ class DisBert_Classification_Model(nn.Module):
         # self.bert_drop=nn.Dropout(0.2)
         # self.fc=nn.Linear(768,256)
         # self.out=nn.Linear(256,10)
-        self.out = nn.Linear(768, 10)
+        self.out = nn.Linear(768, 3)
         # self.relu=nn.ReLU()
 
     def forward(self, ids, mask, token_type_ids):

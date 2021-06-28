@@ -27,8 +27,9 @@ from torch.utils.data import Dataset, DataLoader, random_split
 # import time
 
 
-filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
-
+# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+# filename = './train_covid_sections.csv'
 
 class DisConsumerComplaintsDataset1(Dataset):
     """ Make preprocecing, tokenization and transform consumer complaints
@@ -140,8 +141,8 @@ class DisConsumerComplaintsDataset1(Dataset):
         previous_input_ids = data_tokenize["input_ids"].reshape(-1)
         previous_attention_mask = data_tokenize["attention_mask"].reshape(-1)
         previous_token_type_ids = data_tokenize["token_type_ids"].reshape(-1)
-        # remain = data_tokenize.get("overflowing_tokens").reshape(-1)
-        remain = data_tokenize.get("overflowing_tokens")
+        remain = data_tokenize.get("overflowing_tokens").reshape(-1)
+        # remain = data_tokenize.get("overflowing_tokens")
         targets = torch.tensor(targets, dtype=torch.int)
 
         input_ids_list.append(previous_input_ids)
@@ -149,7 +150,7 @@ class DisConsumerComplaintsDataset1(Dataset):
         token_type_ids_list.append(previous_token_type_ids)
         targets_list.append(targets)
 
-        if remain and self.approach != 'head':
+        if remain.size() and self.approach != 'head':
             remain = torch.tensor(remain, dtype=torch.long)
             idxs = range(len(remain)+self.chunk_len)
             idxs = idxs[(self.chunk_len-self.overlap_len-2)

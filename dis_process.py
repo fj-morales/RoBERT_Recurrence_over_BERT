@@ -106,7 +106,9 @@ else:
 # The final dataset used in this work consists of 555957 rows and 2 columns (one column for the texts and the other for the labels).
 # %% codecell
 # Load the dataset into a pandas dataframe.
-filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
+# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+# filename = './train_covid_sections.csv'
 df=pd.read_csv(filename)
 
 # Report the number of sentences.
@@ -242,7 +244,7 @@ valid_data_loader=DataLoader(
 # %% markdown
 # ![img/each_Chunk_as_Document.png](img/each_Chunk_as_Document.png)
 # %% codecell
-# device="cpu"
+device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -361,7 +363,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-# device="cpu"
+device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -454,7 +456,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-# device="cpu"
+device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
@@ -551,7 +553,7 @@ valid_data_loader=DataLoader(
     collate_fn=my_collate1)
 
 
-# device="cpu"
+device="cpu"
 lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 

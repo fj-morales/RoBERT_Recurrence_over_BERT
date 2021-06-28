@@ -1,29 +1,20 @@
 import torch
 import pandas as pd
 import numpy as np
-# from sklearn.preprocessing import LabelEncoder
-# import re
-# from sklearn.model_selection import train_test_split
 from transformers import DistilBertTokenizer
-# from transformers import BertForSequenceClassification, AdamW, BertConfig
-# from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-
-# import torch.nn as nn
-# from torch.utils.data import Dataset, DataLoader, random_split
+from transformers import AdamW
+from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
-# import transformers
-# from transformers import RobertaTokenizer, BertTokenizer, RobertaModel, BertModel, AdamW# get_linear_schedule_with_warmup
 from transformers import get_linear_schedule_with_warmup
 import time
 
 from dis_utils import *
-# from Custom_Dataset_Class import ConsumerComplaintsDataset1
 from DisCustom_Dataset_Class import DisConsumerComplaintsDataset1
 # from Bert_Classification import Bert_Classification_Model
 from DisBert_Classification import DisBert_Classification_Model
 from DisRoBERT import DisRoBERT_Model
 
-from BERT_Hierarchical import BERT_Hierarchical_Model
+from DisBERT_Hierarchical import DisBERT_Hierarchical_Model
 import warnings
 warnings.filterwarnings("ignore")
 # %% codecell
@@ -316,7 +307,7 @@ lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
 pooling_method="mean"
-model_hierarchical=BERT_Hierarchical_Model(pooling_method=pooling_method).to(device)
+model_hierarchical=DisBERT_Hierarchical_Model(pooling_method=pooling_method).to(device)
 optimizer=AdamW(model_hierarchical.parameters(), lr=lr)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                         num_warmup_steps = 0,

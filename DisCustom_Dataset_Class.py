@@ -28,8 +28,8 @@ from torch.utils.data import Dataset, DataLoader, random_split
 
 
 # filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/covid_sections'
-filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
-# filename = './train_covid_sections.csv'
+# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+filename = './train_covid_sections.csv'
 
 class DisConsumerComplaintsDataset1(Dataset):
     """ Make preprocecing, tokenization and transform consumer complaints

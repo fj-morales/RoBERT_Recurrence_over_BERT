@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import torch.nn as nn
 import time
+from tqdm import tqdm
 
 
 def my_collate1(batches):

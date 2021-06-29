@@ -400,7 +400,7 @@ lr=3e-5#1e-3
 num_training_steps=int(len(dataset) / TRAIN_BATCH_SIZE * EPOCH)
 
 pooling_method="max"
-model_hierarchical=BERT_Hierarchical_Model(pooling_method=pooling_method).to(device)
+model_hierarchical=DisBERT_Hierarchical_Model(pooling_method=pooling_method).to(device)
 optimizer=AdamW(model_hierarchical.parameters(), lr=lr)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                         num_warmup_steps = 0,

@@ -6,7 +6,8 @@ import re
 from torch.utils.data import Dataset, DataLoader, random_split
 
 
-filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+# filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/train_covid_sections.csv'
+filename = '/fbf/fbf_repos/feedbackfruits-rnd-data-office/data/section-classification/outputs/test_covid_sections.csv'
 # filename = './train_covid_sections.csv'
 
 class DisConsumerComplaintsDataset1(Dataset):
@@ -47,6 +48,7 @@ class DisConsumerComplaintsDataset1(Dataset):
         self.approach = approach
         self.min_len = min_len
         self.max_size_dataset = max_size_dataset
+        self.LE = LabelEncoder()
         self.data, self.label = self.process_data(file_location,)
 
     def process_data(self, file_location):
@@ -65,15 +67,14 @@ class DisConsumerComplaintsDataset1(Dataset):
             samples labels transform into a numerical value
         """
         # Load the dataset into a pandas dataframe.
-        print("Nettoyage des données")
         df = pd.read_csv(file_location, dtype="unicode")
+        # df = df[:100]
         train_raw = df[df.text.notnull()]
         train_raw = train_raw.assign(
             len_txt=train_raw.text.apply(lambda x: len(x.split())))
         train_raw = train_raw[train_raw.len_txt > self.min_len]
         train_raw.reset_index(inplace=True, drop=True)
-        LE = LabelEncoder()
-        train_raw['label'] = LE.fit_transform(train_raw['label'])
+        train_raw['label'] = self.LE.fit_transform(train_raw['label'])
         train = train_raw.copy()
         if(self.max_size_dataset):
             train = train.loc[0:self.max_size_dataset, :]
